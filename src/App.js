@@ -1,14 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './index.css';
-import NuevoPedido from './pages/NuevoPedido';
-import PedidoExitoso from './pages/PedidoExitoso';
+import Inicio from './pages/Inicio';
 import Login from './pages/Login';
 import PanelGerente from './pages/PanelGerente';
 import ResolverPedido from './pages/ResolverPedido';
 import Calendario from './pages/Calendario';
 import PanelAdmin from './pages/PanelAdmin';
-import MisPedidos from './pages/MisPedidos';
 
 function ProtectedRoute({ children, adminOnly = false }) {
   const token = localStorage.getItem('token');
@@ -22,9 +20,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<NuevoPedido />} />
-        <Route path="/mis-pedidos" element={<MisPedidos />} />
-        <Route path="/pedido-exitoso" element={<PedidoExitoso />} />
+        <Route path="/" element={<Inicio />} />
+        <Route path="/mis-pedidos" element={<Navigate to="/" />} />
         <Route path="/aprobar/:token" element={<ResolverPedido />} />
         <Route path="/gerente/login" element={<Login />} />
         <Route path="/gerente/panel" element={<ProtectedRoute><PanelGerente /></ProtectedRoute>} />
