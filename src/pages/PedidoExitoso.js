@@ -18,6 +18,7 @@ export function PedidoExitoso() {
             </div>
           )}
           <Link to="/" className="btn btn-outline">Hacer otro pedido</Link>
+          <Link to="/mis-pedidos" className="btn btn-outline" style={{marginLeft:10}}>Ver mis pedidos</Link>
         </div>
       </div>
     </div>
