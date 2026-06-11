@@ -13,19 +13,10 @@ const EMPRESAS = [
 
 const EMPRESA_COLORES = { 'Volkswagen': '#2563EB', 'Turenne': '#EA580C', 'Chevrolet': '#CA8A04', 'Chery': '#DC2626', 'Audi': '#1C1C1C', 'Multimarca': '#7C3AED' };
 
-function calcDias(inicio, fin, feriados) {
+function calcDias(inicio, fin) {
   if (!inicio || !fin) return 0;
-  const feriadoSet = new Set(feriados);
-  let dias = 0;
-  const cur = new Date(inicio + 'T00:00:00');
-  const end = new Date(fin + 'T00:00:00');
-  while (cur <= end) {
-    const dow = cur.getDay();
-    const str = cur.toISOString().split('T')[0];
-    if (dow !== 0 && !feriadoSet.has(str)) dias++;
-    cur.setDate(cur.getDate() + 1);
-  }
-  return dias;
+  const diff = Math.round((new Date(fin) - new Date(inicio)) / (1000*60*60*24)) + 1;
+  return diff > 0 ? diff : 0;
 }
 
 function fmt(f) {
@@ -41,7 +32,6 @@ export default function Inicio() {
 
   // Formulario nuevo pedido
   const [gerentes, setGerentes] = useState([]);
-  const [feriados, setFeriados] = useState([]);
   const [form, setForm] = useState({ empleado_nombre: '', empleado_email: '', empresa_id: '', gerente_id: '', fecha_inicio: '', fecha_fin: '', comentario_empleado: '' });
   const [dias, setDias] = useState(0);
   const [loadingForm, setLoadingForm] = useState(false);
@@ -63,11 +53,10 @@ export default function Inicio() {
 
   useEffect(() => {
     api.get('/gerentes').then(r => setGerentes(r.data));
-    api.get('/admin/feriados').then(r => setFeriados(r.data.map(f => f.fecha.split('T')[0]))).catch(() => {});
-  }, []);
+    }, []);
 
-  useEffect(() => { setDias(calcDias(form.fecha_inicio, form.fecha_fin, feriados)); }, [form.fecha_inicio, form.fecha_fin, feriados]);
-  useEffect(() => { if (formEdit.fecha_inicio && formEdit.fecha_fin) setDiasEdit(calcDias(formEdit.fecha_inicio, formEdit.fecha_fin, feriados)); }, [formEdit.fecha_inicio, formEdit.fecha_fin, feriados]);
+  useEffect(() => { setDias(calcDias(form.fecha_inicio, form.fecha_fin)); }, [form.fecha_inicio, form.fecha_fin, feriados]);
+  useEffect(() => { if (formEdit.fecha_inicio && formEdit.fecha_fin) setDiasEdit(calcDias(formEdit.fecha_inicio, formEdit.fecha_fin)); }, [formEdit.fecha_inicio, formEdit.fecha_fin, feriados]);
 
   function setF(k, v) { setForm(f => ({ ...f, [k]: v })); }
 
