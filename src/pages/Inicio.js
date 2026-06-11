@@ -192,7 +192,7 @@ export default function Inicio() {
                   {dias > 0 && (
                     <div className="dias-calc">
                       <div className="num">{dias}</div>
-                      <div className="label">días hábiles solicitados</div>
+                      <div className="label">días solicitados</div>
                     </div>
                   )}
                   <div className="form-group">
