@@ -55,8 +55,8 @@ export default function Inicio() {
     api.get('/gerentes').then(r => setGerentes(r.data));
     }, []);
 
-  useEffect(() => { setDias(calcDias(form.fecha_inicio, form.fecha_fin)); }, [form.fecha_inicio, form.fecha_fin, feriados]);
-  useEffect(() => { if (formEdit.fecha_inicio && formEdit.fecha_fin) setDiasEdit(calcDias(formEdit.fecha_inicio, formEdit.fecha_fin)); }, [formEdit.fecha_inicio, formEdit.fecha_fin, feriados]);
+  useEffect(() => { setDias(calcDias(form.fecha_inicio, form.fecha_fin)); }, [form.fecha_inicio, form.fecha_fin]);
+  useEffect(() => { if (formEdit.fecha_inicio && formEdit.fecha_fin) setDiasEdit(calcDias(formEdit.fecha_inicio, formEdit.fecha_fin)); }, [formEdit.fecha_inicio, formEdit.fecha_fin]);
 
   function setF(k, v) { setForm(f => ({ ...f, [k]: v })); }
 
