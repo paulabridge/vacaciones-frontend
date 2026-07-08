@@ -21,7 +21,9 @@ function calcDias(inicio, fin) {
 
 function fmt(f) {
   if (!f) return '';
-  return new Date(f).toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  const d = new Date(f);
+  const local = new Date(d.getTime() + d.getTimezoneOffset() * 60000);
+  return local.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 }
 
 export default function Inicio() {
