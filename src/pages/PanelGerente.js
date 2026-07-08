@@ -4,7 +4,9 @@ import api from '../api';
 
 function fmt(f) {
   if (!f) return '';
-  return new Date(f).toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  const d = new Date(f);
+  const local = new Date(d.getTime() + d.getTimezoneOffset() * 60000);
+  return local.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 }
 
 const EMPRESA_COLORES = { 'Volkswagen': '#2563EB', 'Turenne': '#EA580C', 'Chevrolet': '#CA8A04', 'Chery': '#DC2626', 'Audi': '#1C1C1C', 'Multimarca': '#7C3AED' };
